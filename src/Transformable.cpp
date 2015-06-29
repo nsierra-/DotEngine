@@ -1,5 +1,6 @@
 #include "Transformable.hpp"
 #include "BasicObject.hpp"
+#include "BoundingBox.hpp"
 
 namespace Dot
 {
@@ -9,19 +10,31 @@ namespace Dot
 
 	}
 
-	void 	Transformable::move(float x, float y)
-	{
-		move(sf::Vector2f(x, y));
-	}
 
 	void					Transformable::move(const sf::Vector2f & offset)
 	{
-		(void)offset;
-		// sf::Vector2f		oldPos = getPosition();
-
-		// _transform.move(offset);
+		if (parent.colliders.size() == 0)
+			_transform.move(offset);
+		else
+			moveIfNoCollision(offset);
 	}
 
+
+	void					Transformable::moveIfNoCollision(const sf::Vector2f & offset)
+	{
+		for (const auto * objCollider : parent.colliders)
+		{
+			for (const auto * sceneCollider : BoundingBox::all)
+			{
+				if (objCollider->collideWith(*sceneCollider))
+					return ;
+			}
+		}
+		_transform.move(offset);
+	}
+
+	void 					Transformable::move(float x, float y) { move(sf::Vector2f(x, y)); }
+	void					Transformable::moveIfNoCollision(float x, float y) { moveIfNoCollision(sf::Vector2f(x, y)); }
 	const sf::Transform &	Transformable::getTransform() const { return _transform.getTransform(); }
 	const sf::Transform &	Transformable::getInverseTransform() const { return _transform.getInverseTransform(); }
 	const sf::Vector2f &	Transformable::getPosition() const { return _transform.getPosition(); }

@@ -4,13 +4,22 @@
 
 namespace Dot
 {
-	BoundingBox::BoundingBox(sf::Vector2f minimun, sf::Vector2f maximum) :
+	CollidersVector	BoundingBox::all = std::vector<BoundingBox *>();
+
+	BoundingBox::BoundingBox(float sizeX, float sizeY) :
 		AObjectPlugin(AObjectPlugin::BoundingBox),
-		min(minimun),
-		max(maximum)
+		size(sizeX, sizeY),
+		min(0, 0),
+		max(0, 0)
 	{ }
 
-	bool	BoundingBox::collidesWith(const BoundingBox & box) const
+	BoundingBox::BoundingBox(BasicObject * parent, float sizeX, float sizeY) :
+		BoundingBox(sizeX, sizeY)
+	{
+		setParent(parent);
+	}
+
+	bool	BoundingBox::collideWith(const BoundingBox & box) const
 	{
 		if (parent().index == box.parent().index || !isOnSameLayer(box))
 			return false;
@@ -32,14 +41,28 @@ namespace Dot
 		return false;
 	}
 
+	void	BoundingBox::setParent(BasicObject * p)
+	{
+		AObjectPlugin::setParent(p);
+
+		parent().colliders.push_back(this);
+		all.push_back(this);
+		_resetBoxPosition();
+	}
+
+	void	BoundingBox::_resetBoxPosition(void)
+	{
+		min = parent().transform.getPosition();
+		max = min + size;
+	}
+
 	void	BoundingBox::update(void)
 	{
-
+		_resetBoxPosition();
 	}
 
 	void	BoundingBox::draw(void)
 	{
 
 	}
-
 }

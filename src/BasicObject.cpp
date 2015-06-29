@@ -2,7 +2,6 @@
 
 namespace Dot
 {
-	std::unique_ptr<BasicObject>	BasicObject::null = std::unique_ptr<BasicObject>(new BasicObject("null", sf::Vector2f(-1, -1)));
 	BasicObjectsVector	BasicObject::objects = BasicObjectsVector();
 	BasicObject &		BasicObject::getByIndex(unsigned index) { return *objects.at(index); }
 	AObjectPlugin &		BasicObject::getPluginByIndex(unsigned index) { return *plugins.at(index); }
@@ -14,11 +13,6 @@ namespace Dot
 	{
 		transform.setPosition(pos);
 		objects.push_back(std::unique_ptr<BasicObject>(this));
-	}
-
-	void				BasicObject::addPlugin(AObjectPlugin * p)
-	{
-		(void)p;
 	}
 
 	void				BasicObject::update(Engine *)

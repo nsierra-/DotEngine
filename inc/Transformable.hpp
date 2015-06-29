@@ -15,18 +15,20 @@ namespace Dot
 	public:
 		BasicObject &			parent;
 
-								Transformable(BasicObject &);
-		void 					move(float, float);
-		void					move(const sf::Vector2f &);
+				Transformable(BasicObject &);
+		void 	move(float, float);
+		void	move(const sf::Vector2f &);
+		void	moveIfNoCollision(float, float);
+		void	moveIfNoCollision(const sf::Vector2f &);
+		void	setPosition(const sf::Vector2f &);
+		void	setPosition(float, float);
 
-		const sf::Vector2f &	getPosition() const;
 		float					getRotation() const;
+		const sf::Vector2f &	getPosition() const;
 		const sf::Vector2f &	getScale() const;
 		const sf::Vector2f &	getOrigin() const;
 		const sf::Transform &	getTransform() const;
 		const sf::Transform &	getInverseTransform() const;
-		void	setPosition(const sf::Vector2f &);
-		void	setPosition(float, float);
 
 		// void	setRotation(float);
 		// void	setScale(float, float);

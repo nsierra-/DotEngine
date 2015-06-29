@@ -31,7 +31,6 @@ namespace Dot
 		BasicObject(const std::string & = "BasicObject", sf::Vector2f = sf::Vector2f(0, 0));
 		static BasicObject &		getByIndex(unsigned);
 		AObjectPlugin &				getPluginByIndex(unsigned);
-		void						addPlugin(AObjectPlugin *);
 		void						update(Engine *);
 		void						draw(Engine *);
 

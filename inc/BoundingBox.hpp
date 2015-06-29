@@ -7,22 +7,28 @@
 
 namespace Dot
 {
+	using CollidersVector = std::vector<BoundingBox *>;
+
 	class BoundingBox : AObjectPlugin
 	{
 	public:
+		static CollidersVector		all;
+		sf::Vector2f				size;
 		sf::Vector2f				min;
 		sf::Vector2f				max;
 		std::vector<std::string>	layers;
 
-				BoundingBox(sf::Vector2f = sf::Vector2f(0, 0), sf::Vector2f = sf::Vector2f(0, 0));
-				BoundingBox(BasicObject *, sf::Vector2f = sf::Vector2f(0, 0), sf::Vector2f = sf::Vector2f(0, 0));
-		bool	collidesWith(const BoundingBox &) const;
+				BoundingBox(float = 0, float = 0);
+				BoundingBox(BasicObject *, float = 0, float = 0);
+		bool	collideWith(const BoundingBox &) const;
 		bool	isOnSameLayer(const BoundingBox &) const;
 
 		virtual void	update();
 		virtual void	draw();
+		virtual void	setParent(BasicObject *);
 
 	private:
+		void			_resetBoxPosition(void);
 	};
 }
 

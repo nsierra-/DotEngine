@@ -10,7 +10,7 @@ namespace Dot
 		_parent(parent)
 	{
 		if (parent)
-			parent->plugins.push_back(std::unique_ptr<AObjectPlugin>(this));
+			setParent(parent);
 	}
 
 	AObjectPlugin::AObjectPlugin(Type type, BasicObject * parent) :
@@ -24,6 +24,7 @@ namespace Dot
 		if (!isOrphan())
 			throw _orphanSetEx;
 		_parent = parent;
+		_parent->plugins.push_back(std::unique_ptr<AObjectPlugin>(this));
 	}
 
 	BasicObject	&	AObjectPlugin::parent(void)

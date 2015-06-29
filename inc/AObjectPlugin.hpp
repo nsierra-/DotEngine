@@ -47,7 +47,7 @@ namespace Dot
 		virtual void	draw(void) = 0;
 
 		bool			isOrphan(void);
-		void			setParent(BasicObject * parent);
+		virtual void	setParent(BasicObject * parent);
 		BasicObject	&	parent(void);
 		BasicObject	&	parent(void) const;
 
